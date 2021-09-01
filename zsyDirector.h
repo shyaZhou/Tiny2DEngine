@@ -18,7 +18,7 @@ private:
     // 切换场景放在帧处理中回调
     // 备忘录模式，场景切换过程都能保存下来
     // 场景
-    std::vector<zsyScene *> _scenes;
+    Vector<zsyScene *> _scenes;
     zsyScene *_runningScene;
     zsyScene *_nextScene;
 

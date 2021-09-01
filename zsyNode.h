@@ -76,7 +76,7 @@ public:
     virtual void update(float dt);
 
     template<typename _T> inline
-    static void sortNodes(std::vector<_T*>& nodes)
+    static void sortNodes(Vector<_T*>& nodes)
     {
         static_assert(std::is_base_of<zsyNode, _T>::value, "Node::sortNodes: Only accept derived of Node!");
 
@@ -107,7 +107,7 @@ protected:
     bool _reorderChildDirty;
     bool _pause;
 
-    std::vector<zsyNode*> _children;
+    Vector<zsyNode*> _children;
     zsyNode* _parent;
 
 };

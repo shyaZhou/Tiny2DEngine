@@ -18,8 +18,8 @@ zsyNode::zsyNode()
     ZSYLOG("构造Node --- address = %p \n", this);
 }
 zsyNode::~zsyNode(){
-    for(auto child : _children)
-        child->release();
+    // for(auto child : _children)
+    //     child->release();
     ZSYLOG("析构Node --- address = %p ; name = %s \n", this, _name.c_str());
 }
 
@@ -40,7 +40,7 @@ zsyNode *zsyNode::getChildByTag(int tag) const {
 
 void zsyNode::addChild(zsyNode* child, int localZOrder, int tag){
     // 引用计数+1
-    child->retain();
+    // child->retain();
     
     child->_parent = this;
     _children.push_back(child);
