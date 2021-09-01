@@ -32,6 +32,10 @@ zsyDirector::~zsyDirector()
     ZSY_SAFE_DELETE(_render);
     ZSY_SAFE_DELETE(_scheduler);
     ZSY_SAFE_DELETE(_releasePool);
+    
+    for(auto scene : _scenes) {
+        scene->release();
+    }
 }
 
 bool zsyDirector::init() {
@@ -122,17 +126,23 @@ void zsyDirector::restart() {
 
 // 切换场景
 void zsyDirector::runScene(zsyScene *scene) {
+    scene->retain();
     _scenes.push_back(scene);
     _nextScene = scene;
     this->start();
 }
 void zsyDirector::pushScene(zsyScene *scene) {
+    // 使用retain后就由director负责维护，retain表示获取管理权
+    scene->retain();
     _scenes.push_back(scene);
     _nextScene = scene;
 }
 void zsyDirector::popScene(zsyScene *scene) {
     if(_scenes.size() > 1) {
+        auto p = _scenes.back();
+        p->release();
         _scenes.pop_back();
+
         _nextScene = _scenes.back();
     } else {
 
@@ -141,6 +151,7 @@ void zsyDirector::popScene(zsyScene *scene) {
 void zsyDirector::replaceScene(zsyScene *scene) {
     if(_scenes.size() > 0) 
         _scenes.pop_back();
+    scene->retain();
     _scenes.push_back(scene);
     _nextScene = scene;
 }

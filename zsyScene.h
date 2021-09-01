@@ -8,11 +8,13 @@ NS_ZSY_BEGIN
 class zsyRender;
 class zsyScene : public zsyNode
 {
-private:
-    /* data */
-public:
+protected:
     zsyScene(/* args */);
     ~zsyScene();
+
+public:
+    CREATE_FUNC(zsyScene);
+    
 public:
 
     virtual void onEnter() override;

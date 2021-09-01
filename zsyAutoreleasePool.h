@@ -6,6 +6,8 @@
 NS_ZSY_BEGIN
 
 class zsyRef;
+
+// 内存管理
 class zsyAutoreleasePool
 {
 private:

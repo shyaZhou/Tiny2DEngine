@@ -13,11 +13,19 @@ MyScene::~MyScene()
 
 bool MyScene::init(){
     // 未释放内存
-    auto sprite = new zsySprite();
+    // auto sprite = new zsySprite();
+    auto sprite = zsySprite::create();
+    // sprite->autorelease();
     sprite->setName("my --- sprite");
     this->addChild(sprite, 1);
 
-    auto node = new zsyNode();
+
+    auto node = zsyNode::create();
+    // 使用create
+    // auto node = new zsyNode();
+    // node->init();
+    // node->autorelease();
+
     node->setName("my ---- node");
     this->addChild(node, -1);
     return true;

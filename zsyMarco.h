@@ -25,21 +25,21 @@
 #define ZSY_SAFE_RETAIN(p)           do { if(p) { (p)->retain(); } } while(0)
 #define ZSY_BREAK_IF(cond)           if(cond) break
 
-#define CREATE_FUNC(__TYPE__) \
-static __TYPE__* create() \
-{ \
-    __TYPE__ *pRet = new(std::nothrow) __TYPE__(); \
-    if (pRet && pRet->init()) \
-    { \
-        pRet->autorelease(); \
-        return pRet; \
-    } \
-    else \
-    { \
-        delete pRet; \
-        pRet = nullptr; \
-        return nullptr; \
-    } \
+#define CREATE_FUNC(__TYPE__)                       \
+static __TYPE__* create()                           \
+{                                                   \
+    __TYPE__ *pRet = new(std::nothrow) __TYPE__();  \
+    if (pRet && pRet->init())                       \
+    {                                               \
+        pRet->autorelease();                        \
+        return pRet;                                \
+    }                                               \
+    else                                            \
+    {                                               \
+        delete pRet;                                \
+        pRet = nullptr;                             \
+        return nullptr;                             \
+    }                                               \
 }
 
 #endif

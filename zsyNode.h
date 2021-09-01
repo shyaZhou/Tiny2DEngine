@@ -8,21 +8,33 @@
 #include "zsyRef.h"
 #include "zsyVector.h"
 #include <functional>
+#include "zsyVector.h"
 
 NS_ZSY_BEGIN
 
 class zsyRender;
-class zsyNode
+class zsyNode : public zsyRef
 {
     friend class zsyRender;
 
-public:
-    zsyNode(/* args */);
+// 不能直接创建，只能被继承
+protected:
+    zsyNode();
     ~zsyNode();
     virtual bool init(){ return true; }
 
 public:
-    // CREATE_FUNC(zsyNode);
+    CREATE_FUNC(zsyNode);
+    // static zsyNode *create() {
+    //     auto node = new zsyNode();
+    //     if(node->init()){
+    //         // 插入releasePool
+    //         node->autorelease();
+    //         return node;
+    //     }else
+    //         ZSY_SAFE_DELETE(node);
+    //     return nullptr;
+    // }
 
 public:
     // 通过名字获取子节点

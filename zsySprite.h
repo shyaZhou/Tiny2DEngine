@@ -6,12 +6,12 @@ NS_ZSY_BEGIN
 
 class zsySprite : public zsyNode
 {
-private:
+protected:
     /* data */
-public:
     zsySprite(/* args */);
     ~zsySprite();
-
+public:
+    CREATE_FUNC(zsySprite);
     virtual void draw(zsyRender *render) override;
 };
 

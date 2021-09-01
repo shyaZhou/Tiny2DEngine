@@ -69,6 +69,7 @@ public:
 
     // 返回给director进行调用
     inline zsyScheduler *getScheduler() {return _scheduler;}
+    inline zsyAutoreleasePool *getAutoreleasePool(){ return _releasePool; }
 };
 
 NS_ZSY_END

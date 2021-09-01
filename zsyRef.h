@@ -9,9 +9,13 @@ class zsyRef
 private:
     // Node继承Ref
     unsigned int _reference;
-public:
+
+// 不允许外部创建释放
+protected:
     zsyRef(/* args */);
-    ~zsyRef();
+    virtual ~zsyRef();
+
+public:
 
     // 引用，使用此方法后内存由Ref维护
     void retain();
