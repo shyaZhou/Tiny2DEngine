@@ -18,12 +18,13 @@ void zsyScene::onEnter(){
     // 添加任务
     this->scheduleUpdate();
 }
-void zsyScene::onExit(){
 
+void zsyScene::onExit(){
     zsyNode::onExit();
     // 清理任务
     this->unscheduleUpdate();
 }
+
 void zsyScene::update(float dt){
     ZSYLOG("===========zsyScene - update %f \n", dt);
 

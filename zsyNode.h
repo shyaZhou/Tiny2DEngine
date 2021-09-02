@@ -8,7 +8,6 @@
 #include "zsyRef.h"
 #include "zsyVector.h"
 #include <functional>
-#include "zsyVector.h"
 
 NS_ZSY_BEGIN
 
@@ -63,9 +62,11 @@ public:
     void unscheduleUpdate();
     void resume();
     void pause();
-
     virtual void onEnter();
     virtual void onExit();
+
+    virtual void scheduleOnce(std::function<void(float)> callback);
+    virtual void schedule(std::function<void(float)> callback, int repeat, float delay);
 
     // virtual void scheduleOnce(std::function<void(float)> callback);
     // virtual void schedule(std::function<void(float)> callback, int repeat, float delay);

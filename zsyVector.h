@@ -203,7 +203,7 @@ public:
 
     // Reverse the Vector
     void reverse() {
-        std::reverse(std::begin(_data), std::end(_data));
+        std::reverse( std::begin(_data), std::end(_data) );
     }
 protected:
     void addRefForAllObjects() {

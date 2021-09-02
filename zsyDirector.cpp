@@ -4,6 +4,7 @@
 USING_NS_ZSY;
 
 zsyDirector *zsyDirector::_instance = nullptr;
+
 zsyDirector *zsyDirector::instance() {
     // 游戏启动不可能通过多线程启动，因此Director启动用考虑多线程情况
     if(_instance == nullptr) {
@@ -139,10 +140,9 @@ void zsyDirector::pushScene(zsyScene *scene) {
 }
 void zsyDirector::popScene(zsyScene *scene) {
     if(_scenes.size() > 1) {
-        auto p = _scenes.back();
+        // auto p = _scenes.back();
         // p->release();
         _scenes.pop_back();
-
         _nextScene = _scenes.back();
     } else {
 

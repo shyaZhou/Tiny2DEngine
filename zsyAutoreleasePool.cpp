@@ -1,5 +1,4 @@
 #include "zsyAutoreleasePool.h"
-#include "zsyMarco.h"
 #include "zsyRef.h"
 
 USING_NS_ZSY;

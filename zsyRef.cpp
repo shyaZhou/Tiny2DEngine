@@ -1,5 +1,4 @@
 #include "zsyRef.h"
-#include "zsyMarco.h"
 #include "zsyDirector.h"
 
 USING_NS_ZSY;

@@ -22,6 +22,6 @@ public:
     void clear();
 };
 
-#endif 
-
 NS_ZSY_END
+
+#endif 

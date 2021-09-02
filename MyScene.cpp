@@ -17,7 +17,7 @@ bool MyScene::init(){
     auto sprite = zsySprite::create();
     // sprite->autorelease();
     sprite->setName("my --- sprite");
-    this->addChild(sprite, 1);
+    // this->addChild(sprite, 1);
 
 
     auto node = zsyNode::create();
@@ -26,8 +26,15 @@ bool MyScene::init(){
     // node->init();
     // node->autorelease();
 
-    node->setName("my ---- node");
-    this->addChild(node, -1);
+    node->setName("my --- node");
+    // this->addChild(node, -1);
+
+    // this->scheduleOnce([](float dt){
+    //     ZSYLOG("=============MyScene --- schedule once!\n");
+    // });
+    this->schedule([](float dt){
+        ZSYLOG("=============MyScene --- schedule repeat!\n");
+    }, 3, 2.0f);
     return true;
 }
 
@@ -38,13 +45,12 @@ void MyScene::onEnter(){
     this->scheduleUpdate();
 }
 void MyScene::onExit(){
-
     zsyNode::onExit();
     // 清理任务
     this->unscheduleUpdate();
 }
 void MyScene::update(float dt){
-    ZSYLOG("===========MyScene - update %f \n", dt);
+    ZSYLOG("==========MyScene - update %f \n", dt);
 }
 void MyScene::render(zsyRender* render){
     this->visit(render);

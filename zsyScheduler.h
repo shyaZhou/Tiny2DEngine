@@ -14,20 +14,35 @@ struct _UpdateEntry{
     bool paused;
 };
 
-struct _UpdateOnceEntry{
+struct _TimerEntry{
     void *target;
     std::function<void(float)> callback;
     bool paused;
+    unsigned int repeat;
+    float time;
 };
 
 class zsyScheduler
 {
 private:
     std::unordered_map<void *, _UpdateEntry *> _updateMap;
-    std::unordered_map<void *, _UpdateOnceEntry *> _updateOnceMap;
+    std::unordered_map<void *, _TimerEntry *> _repeatMap; // 重复N次
+    std::unordered_map<void *, _TimerEntry *> _timerMap; // 重复1次
 public:
     zsyScheduler(/* args */);
     ~zsyScheduler();
+
+    template<typename T>
+    void scheduleOnce(T *target, std::function<void(float)> callback, bool paused = false) {
+        this->schedule(callback, 0.0f, 0, target, paused);
+    }
+
+    template<typename T>
+    void schedule(T *target, std::function<void(float)> callback, float delay, unsigned int repeat, bool paused = false) {
+        this->schedule(callback, delay, repeat, target, paused);
+    }
+
+    void schedule(const std::function<void(float)> &callback, float delay, unsigned int repeat, void *target, bool paused);
 
     // 保存任何类对象，只要T类型有update方法且update方法为void*(float)，保存在_UpdateEntry中
     template<typename T>
@@ -38,17 +53,8 @@ public:
         }, target, paused);
     }
 
-    template<typename T>
-    void scheduleUpdateOnce(T *target, bool paused) {
-        // 闭包
-        this->schedulePerFrame([target](float dt){
-            target->update(dt);
-        }, target, paused);
-    }
     void unscheduleUpdate(void *target);
-    void doOnce(void *target, float dt);
     void schedulePerFrame(const std::function<void(float)> &callback, void *target, bool paused);
-    void scheduleOnce(const std::function<void(float)> &callback, void *target, bool paused);
     void update(float dt);
 };
 

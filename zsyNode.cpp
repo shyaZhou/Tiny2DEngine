@@ -38,7 +38,7 @@ zsyNode *zsyNode::getChildByTag(int tag) const {
     return nullptr;
 }
 
-void zsyNode::addChild(zsyNode* child, int localZOrder, int tag){
+void zsyNode::addChild(zsyNode *child, int localZOrder, int tag){
     // 引用计数+1
     // child->retain();
     
@@ -50,7 +50,7 @@ void zsyNode::addChild(zsyNode* child, int localZOrder, int tag){
 }
 
 void zsyNode::removeChild(zsyNode* child){
-    if(_children.empty()) return ;
+    if(_children.empty()) return;
     auto iter = std::find(std::begin(_children), std::end(_children), child);
     if(iter != _children.end()){
         _children.erase(iter);
@@ -87,7 +87,7 @@ void zsyNode::visit(zsyRender *render) {
         for(; i < _children.size(); i++) {
             auto node = _children.at(i);
             // 渲染左子树
-            if (node && node->_localZOrder < 0) {
+            if(node && node->_localZOrder < 0) {
                 node->visit(render);
             } else {
                 break;
@@ -97,19 +97,20 @@ void zsyNode::visit(zsyRender *render) {
         this->draw(render);
 
         // right draw
-        for (auto it = _children.begin() + i; it != _children.end(); ++it) {
+        for(auto it = _children.begin() + i; it != _children.end(); ++it) {
             (*it)->visit(render);
         } 
-    } else {
+    }else{
         this->draw(render);
     }
 }
 
 // 渲染方法
 void zsyNode::draw(zsyRender *render) {
-    if(_visible)
+    if(_visible) {
         render->draw(this);
-    ZSYLOG("zsyNode --- draw ! name = %s, children = %ld\n", _name.c_str(), _children.size());
+        ZSYLOG("zsyNode --- draw ! name = %s, children = %ld\n", _name.c_str(), _children.size());
+    }
 }
 
 // 注册到调度中
@@ -122,7 +123,7 @@ void zsyNode::unscheduleUpdate(){
 void zsyNode::resume(){
     _pause = false;
 
-    for(auto child: _children){
+    for(auto child : _children){
         child->resume();
     }
 }
@@ -147,6 +148,20 @@ void zsyNode::onExit(){
 // 是否update直接走scheduler，无需在此回调
 void zsyNode::update(float dt) {
 
+}
+
+void zsyNode::scheduleOnce(std::function<void(float)> callback){
+    zsyDirector::instance()->getScheduler()->scheduleOnce(this, [callback](float dt){
+        ZSYLOG("==============SCHEDULE ONCE!==================\n");
+        callback(dt);
+    });
+}
+void zsyNode::schedule(std::function<void(float)> callback, int repeat, float delay){
+    zsyDirector::instance()->getScheduler()->schedule(this, [callback](float dt){
+        callback(dt);
+        ZSYLOG("==============SCHEDULE REPEAT!==================\n");
+    }, 1.0f, repeat, false);
+    // -1表示无限循环下去
 }
 
 NS_ZSY_END
