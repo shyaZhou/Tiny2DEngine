@@ -16,11 +16,11 @@ public:
     ~MyScene();
 public:
 
-    virtual bool init();
+    virtual bool init() override;
     virtual void onEnter() override;
     virtual void onExit() override;
-    virtual void update(float dt);
-    virtual void render(zsyRender* render);
+    virtual void update(float dt) override;
+    virtual void render(zsyRender* render) override;
 };
 
 NS_ZSY_END

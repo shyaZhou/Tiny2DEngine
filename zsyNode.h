@@ -77,11 +77,11 @@ public:
     virtual void update(float dt);
 
     template<typename _T> inline
-    static void sortNodes(Vector<_T*>& nodes)
+    static void sortNodes(Vector<_T*> &nodes)
     {
         static_assert(std::is_base_of<zsyNode, _T>::value, "Node::sortNodes: Only accept derived of Node!");
 
-        std::sort(std::begin(nodes), std::end(nodes), [](_T* n1, _T* n2) {
+        std::sort(std::begin(nodes), std::end(nodes), [](_T *n1, _T *n2) {
             return n1->_localZOrder < n2->_localZOrder;
         });
     }
